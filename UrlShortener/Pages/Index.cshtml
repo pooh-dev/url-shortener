@@ -1,10 +1,14 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="card border-secondary text-center mx-auto" style="max-width: 42rem;">
+    <div class="card-body text-secondary">
+        <h5 class="card-title">Paste the URL to be shortened</h5>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter the link here" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" id="button-addon2">Shorten URL</button>
+        </div>
+    </div>
 </div>
+
+
