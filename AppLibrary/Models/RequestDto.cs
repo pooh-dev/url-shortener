@@ -2,15 +2,10 @@
 
 namespace AppLibrary.Models;
 
-public class UrlShortenerDto
+public class RequestDto
 {
     [Required]
     [Url]
     [Display(Name = "URL")]
     public string? OriginalUrl { get; set; }
-
-    [Url]
-    public string? ShortenedUrl { get; set; }
-
-    public uint RequestCounter { get; set; }
 }

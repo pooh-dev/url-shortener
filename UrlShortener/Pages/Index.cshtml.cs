@@ -7,7 +7,7 @@ namespace UrlShortener.Pages;
 public class IndexModel : PageModel
 {
     [BindProperty]
-    public UrlShortenerDto? Input { get; set; }
+    public RequestDto? Input { get; set; }
 
     public void OnGet()
     {
