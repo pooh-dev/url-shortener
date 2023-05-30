@@ -4,13 +4,16 @@
     ViewData["Title"] = "URL Shortener";
 }
 
-<div class="card border-secondary text-center mx-auto" style="max-width: 42rem;">
+<div class="card border-secondary mx-auto" style="max-width: 42rem;">
     <div class="card-body text-secondary">
-        <h5 class="card-title">Paste the URL to be shortened</h5>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Enter the link here" aria-describedby="button-addon2">
-            <button class="btn btn-primary" type="button" id="button-addon2">Shorten URL</button>
-        </div>
+        <h5 class="card-title text-center">Paste the URL to be shortened</h5>
+        <form asp-page="Index">
+            <div class="form-group input-group mb-1">
+                <input asp-for="Input.OriginalUrl" type="text" class="form-control" placeholder="Enter the link here" aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="submit" id="button-addon2">Shorten URL</button>                
+            </div> 
+            <span asp-validation-for="Input.OriginalUrl" class="text-start text-danger small"></span>
+        </form>
     </div>
 </div>
 

@@ -1,20 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AppLibrary.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace UrlShortener.Pages
+namespace UrlShortener.Pages;
+
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    [BindProperty]
+    public UrlShortenerDto? Input { get; set; }
+
+    public void OnGet()
     {
-        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(ILogger<IndexModel> logger)
+    }
+
+    public IActionResult OnPost() 
+    {
+        if (!ModelState.IsValid)
         {
-            _logger = logger;
+            return Page();
         }
 
-        public void OnGet()
-        {
-
-        }
+        return RedirectToPage("ShortenedUrl");
     }
 }
