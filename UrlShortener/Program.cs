@@ -1,4 +1,6 @@
+using AppLibrary.Configurations;
 using AppLibrary.Repositories;
+using AppLibrary.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,10 @@ builder.Services.AddRazorPages();
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseSqlServer(connection, action => action.MigrationsAssembly("UrlShortener")));
+
+builder.Services.AddSingleton<IUrlRepository, UrlRepository>();
+builder.Services.AddSingleton<IUrlService, UrlService>();
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 var app = builder.Build();
 
