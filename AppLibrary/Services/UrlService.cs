@@ -20,10 +20,17 @@ public class UrlService : IUrlService
     public ResponseDto AddUrl(RequestDto requestDto)
     {
         var urlData = _mapper.Map<UrlData>(requestDto);
-        var uniqueInt = _shiftId + _urlRepository.GetMaxId();
-        urlData.ShortenedUrl = Base62.EncodeUInt64((ulong)uniqueInt);
         urlData.CreatedDate = DateTime.UtcNow;
-        _urlRepository.AddUrl(urlData);
+
+        // this section should be atomic
+        // the 'Shortened URL' is based on a unique Id from DB
+        // this approach helps us not to check if the 'Shortened URL' already exists in DB
+        lock (this)
+        {
+            var uniqueInt = _shiftId + _urlRepository.GetMaxId();
+            urlData.ShortenedUrl = Base62.EncodeUInt64((ulong)uniqueInt);
+            _urlRepository.AddUrl(urlData);
+        }        
 
         return _mapper.Map<ResponseDto>(urlData);
     }
