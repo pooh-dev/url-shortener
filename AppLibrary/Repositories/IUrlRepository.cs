@@ -4,7 +4,7 @@ namespace AppLibrary.Repositories;
 
 public interface IUrlRepository
 {
-    UrlData AddUrl(UrlData urlData);
+    void AddUrl(UrlData urlData);
     UrlData? GetUrlByShortenedUrl(string shortenedUrl);
     int GetMaxId();
 }

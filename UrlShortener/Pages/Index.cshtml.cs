@@ -1,4 +1,5 @@
 ﻿using AppLibrary.Models;
+using AppLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,8 +7,14 @@ namespace UrlShortener.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly IUrlService _urlService;
+    public IndexModel(IUrlService urlService)
+    {
+        _urlService = urlService;
+    }
+
     [BindProperty]
-    public RequestDto? Input { get; set; }
+    public RequestDto RequestDto { get; set; }
 
     public void OnGet()
     {
@@ -21,6 +28,8 @@ public class IndexModel : PageModel
             return Page();
         }
 
-        return RedirectToPage("ShortenedUrl");
+        var shortenedUrl = _urlService.AddUrl(RequestDto);
+
+        return RedirectToPage("ShortenedUrl", new { url = shortenedUrl});
     }
 }

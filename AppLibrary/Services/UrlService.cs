@@ -17,7 +17,7 @@ public class UrlService : IUrlService
         _shiftId = 1000;
     }
 
-    public ResponseDto AddUrl(RequestDto requestDto)
+    public string AddUrl(RequestDto requestDto)
     {
         var urlData = _mapper.Map<UrlData>(requestDto);
         urlData.CreatedDate = DateTime.UtcNow;
@@ -32,7 +32,7 @@ public class UrlService : IUrlService
             _urlRepository.AddUrl(urlData);
         }        
 
-        return _mapper.Map<ResponseDto>(urlData);
+        return urlData.ShortenedUrl;
     }
 
     public ResponseDto GetUrlByShortenedUrl(string shortenedUrl)

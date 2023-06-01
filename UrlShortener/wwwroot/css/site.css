@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.copied-url {
+    font-weight: bold;
+    color: white;
+    background-color: #0d6efd;
+}

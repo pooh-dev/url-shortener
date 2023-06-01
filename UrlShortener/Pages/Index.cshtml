@@ -9,10 +9,10 @@
         <h5 class="card-title text-center">Paste the URL to be shortened</h5>
         <form asp-page="Index">
             <div class="form-group input-group mb-1">
-                <input asp-for="Input.OriginalUrl" type="text" class="form-control" placeholder="Enter the link here" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="submit" id="button-addon2">Shorten URL</button>                
+                <input asp-for="RequestDto.OriginalUrl" class="form-control" placeholder="Enter the link here">
+                <button class="btn btn-primary" type="submit">Shorten URL</button>                
             </div> 
-            <span asp-validation-for="Input.OriginalUrl" class="text-start text-danger small"></span>
+            <span asp-validation-for="RequestDto.OriginalUrl" class="text-start text-danger small"></span>
         </form>
     </div>
 </div>

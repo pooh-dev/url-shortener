@@ -10,11 +10,10 @@ public class UrlRepository : IUrlRepository
         _context = context;
     }
 
-    public UrlData AddUrl(UrlData urlData)
+    public void AddUrl(UrlData urlData)
     {
         _context.Urls.Add(urlData);
         _context.SaveChanges();
-        return urlData;
     }
 
     public UrlData? GetUrlByShortenedUrl(string shortenedUrl)
@@ -26,6 +25,9 @@ public class UrlRepository : IUrlRepository
 
     public int GetMaxId()
     {
-        return _context.Urls.Max(url => url.Id);
+        return _context.Urls
+            .DefaultIfEmpty()
+            .Max(url => url == null ? 0 : url.Id);
+
     }
 }

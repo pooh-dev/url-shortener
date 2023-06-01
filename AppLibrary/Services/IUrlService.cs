@@ -4,6 +4,6 @@ namespace AppLibrary.Services;
 
 public interface IUrlService
 {
-    ResponseDto AddUrl(RequestDto requestDto);
+    string AddUrl(RequestDto requestDto);
     ResponseDto GetUrlByShortenedUrl(string shortenedUrl);
 }

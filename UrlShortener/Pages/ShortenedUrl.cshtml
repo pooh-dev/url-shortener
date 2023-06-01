@@ -1,7 +1,39 @@
-﻿@page
+﻿@page "/shortened-url/{url}"
 @model UrlShortener.Pages.ShortenedUrlModel
 @{
     ViewData["Title"] = "Shortened URL";
 }
 
-<h1>URL was shortened successfully</h1>
+<div class="card border-secondary mx-auto" style="max-width: 38rem;">
+    <div class="card-body text-secondary">
+        <h4 class="card-title">Your shortened URL</h4>
+        <p class="small">Copy the shortened link and share it in messages, texts, posts, websites and other locations.</p>        
+        <div class="form-group input-group">
+            <input type="text" class="form-control" value="@Model.ResponseDto.ShortenedUrl">
+            <button class="btn btn-primary copy-url-btn">Copy URL</button>
+        </div> 
+        <p class="small">
+            Original URL: <a href="@Model.ResponseDto.OriginalUrl" target="_blank">@Model.ResponseDto.OriginalUrl</a>
+        </p>
+        <a href="/" class="btn btn-primary">Shorten another URL</a>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {            
+            $('.copy-url-btn').click(function (e) {
+                let input = document.querySelector(".form-group input");
+                navigator.clipboard.writeText(input.value);
+                input.classList.add("copied-url");
+
+                setTimeout(function () {
+                    input.classList.remove("copied-url");
+                }, 1000);
+            });
+        });
+    </script>
+}
