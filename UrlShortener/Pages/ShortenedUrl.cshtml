@@ -26,12 +26,16 @@
     <script>
         $(function () {            
             $('.copy-url-btn').click(function (e) {
-                let input = document.querySelector(".form-group input");
+                let input = document.querySelector('.form-group input');
                 navigator.clipboard.writeText(input.value);
-                input.classList.add("copied-url");
+                input.classList.add('copied-url');
+
+                let button = document.querySelector('.form-group button');
+                button.innerText = 'Copied';
 
                 setTimeout(function () {
-                    input.classList.remove("copied-url");
+                    input.classList.remove('copied-url');
+                    button.innerText = 'Copy URL';
                 }, 1000);
             });
         });

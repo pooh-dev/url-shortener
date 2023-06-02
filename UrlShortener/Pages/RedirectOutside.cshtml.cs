@@ -17,7 +17,7 @@ namespace UrlShortener.Pages
             var responseDto = _urlService.GetUrlByShortenedUrl(shortenedUrl);
 
             return responseDto is null
-                ? RedirectToPage("Index")
+                ? RedirectToPage("Error404")
                 : Redirect(responseDto.OriginalUrl);
         }
     }

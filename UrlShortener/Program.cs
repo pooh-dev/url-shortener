@@ -16,6 +16,8 @@ builder.Services.AddScoped<IUrlRepository, UrlRepository>();
 builder.Services.AddScoped<IUrlService, UrlService>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +28,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStatusCodePagesWithReExecute("/status/{0}");
 app.UseStaticFiles();
 
 app.UseRouting();
