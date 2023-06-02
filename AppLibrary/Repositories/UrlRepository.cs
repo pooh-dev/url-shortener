@@ -28,6 +28,5 @@ public class UrlRepository : IUrlRepository
         return _context.Urls
             .DefaultIfEmpty()
             .Max(url => url == null ? 0 : url.Id);
-
     }
 }
