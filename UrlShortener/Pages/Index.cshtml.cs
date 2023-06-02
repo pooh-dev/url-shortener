@@ -16,10 +16,7 @@ public class IndexModel : PageModel
     [BindProperty]
     public RequestDto RequestDto { get; set; }
 
-    public void OnGet()
-    {
-
-    }
+    public void OnGet() { }
 
     public IActionResult OnPost() 
     {

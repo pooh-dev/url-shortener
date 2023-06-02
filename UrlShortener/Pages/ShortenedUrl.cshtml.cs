@@ -17,5 +17,6 @@ public class ShortenedUrlModel : PageModel
     public void OnGet(string url)
     {
         ResponseDto = _urlService.GetUrlByShortenedUrl(url);
+        ResponseDto.ShortenedUrl = $"{Request.Scheme}://{Request.Host}/{ResponseDto.ShortenedUrl}";
     }
 }
