@@ -1,7 +1,8 @@
-using AppLibrary.Configurations;
-using AppLibrary.Repositories;
-using AppLibrary.Services;
 using Microsoft.EntityFrameworkCore;
+using UrlShortener.Configurations;
+using UrlShortener.Data;
+using UrlShortener.Repositories;
+using UrlShortener.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseSqlServer(connection, action => action.MigrationsAssembly("UrlShortener")));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddScoped<IUrlRepository, UrlRepository>();
 builder.Services.AddScoped<IUrlService, UrlService>();

@@ -1,7 +1,7 @@
-﻿using AppLibrary.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using UrlShortener.Data.Models;
 
-namespace AppLibrary.Repositories;
+namespace UrlShortener.Data;
 
 public class AppDbContext : DbContext
 {

@@ -1,7 +1,7 @@
-﻿using AppLibrary.Models;
-using AppLibrary.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using UrlShortener.Data.Models;
+using UrlShortener.Services;
 
 namespace UrlShortener.Pages;
 
