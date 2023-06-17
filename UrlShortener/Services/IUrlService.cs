@@ -6,4 +6,5 @@ public interface IUrlService
 {
     string AddUrl(RequestDto requestDto);
     ResponseDto GetUrlByShortenedUrl(string shortenedUrl);
+    bool UrlExist(string shortenedUrl);
 }
