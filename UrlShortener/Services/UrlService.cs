@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
+using UrlShortener.Data;
 using UrlShortener.Data.Models;
-using UrlShortener.Repositories;
 
 namespace UrlShortener.Services;
 
 public class UrlService : IUrlService
 {
-    private readonly IUrlRepository _urlRepository;
+    private readonly AppDbContext _dbContext;
     private readonly IMapper _mapper;
     private readonly int _shiftId; // to make ShortenedUrl longer
-    public UrlService(IUrlRepository urlRepository, IMapper mapper)
+    public UrlService(AppDbContext dbContext, IMapper mapper)
     {
-        _urlRepository = urlRepository;
+        _dbContext = dbContext;
         _mapper = mapper;
         _shiftId = 1000;
     }
@@ -26,9 +26,14 @@ public class UrlService : IUrlService
         // this approach helps us not to check if the 'Shortened URL' already exists in DB
         lock (this)
         {
-            var uniqueInt = _shiftId + _urlRepository.GetMaxId();
+            var maxId = _dbContext.Urls
+                .DefaultIfEmpty()
+                .Max(url => url == null ? 0 : url.Id);
+            var uniqueInt = _shiftId + maxId;
             urlData.ShortenedUrl = Base62.EncodeUInt64((ulong)uniqueInt);
-            _urlRepository.AddUrl(urlData);
+
+            _dbContext.Urls.Add(urlData);
+            _dbContext.SaveChanges();
         }        
 
         return urlData.ShortenedUrl;
@@ -36,7 +41,9 @@ public class UrlService : IUrlService
 
     public ResponseDto GetUrlByShortenedUrl(string shortenedUrl)
     {
-        var urlData = _urlRepository.GetUrlByShortenedUrl(shortenedUrl);
+        var urlData = _dbContext.Urls
+            .Where(url => url.ShortenedUrl.Equals(shortenedUrl))
+            .FirstOrDefault();
         return _mapper.Map<ResponseDto>(urlData);
     }
 }
