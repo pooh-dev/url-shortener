@@ -18,14 +18,14 @@ public class IndexModel : PageModel
 
     public void OnGet() { }
 
-    public IActionResult OnPost() 
+    public async Task<IActionResult> OnPost() 
     {
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
-        var shortenedUrl = _urlService.AddUrl(RequestDto);
+        var shortenedUrl = await _urlService.AddUrlAsync(RequestDto);
 
         return RedirectToPage("ShortenedUrl", new { url = shortenedUrl});
     }

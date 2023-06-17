@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using UrlShortener.Data;
 using UrlShortener.Data.Models;
 
@@ -14,39 +15,40 @@ public class UrlService : IUrlService
         _mapper = mapper;
     }
 
-    public string AddUrl(RequestDto requestDto)
+    public async Task<string> AddUrlAsync(RequestDto requestDto)
     {
         var urlData = _mapper.Map<UrlData>(requestDto);
-        urlData.ShortenedUrl = GetShortenedUrl();
+        urlData.ShortenedUrl = await GetShortenedUrlAsync();
 
-        _dbContext.Urls.Add(urlData);
-        _dbContext.SaveChanges();      
+        await _dbContext.Urls.AddAsync(urlData);
+        await _dbContext.SaveChangesAsync();      
 
         return urlData.ShortenedUrl;
     }
 
-    public ResponseDto GetUrlByShortenedUrl(string shortenedUrl)
+    public async Task<ResponseDto> GetUrlByShortenedUrlAsync(string shortenedUrl)
     {
-        var urlData = _dbContext.Urls
-            .Where(url => url.ShortenedUrl.Equals(shortenedUrl))
-            .FirstOrDefault();
+        var urlData = await _dbContext.Urls
+            .Where(url => url.ShortenedUrl == shortenedUrl)
+            .FirstOrDefaultAsync();
+
         return _mapper.Map<ResponseDto>(urlData);
     }
 
-    public bool UrlExist(string shortenedUrl)
+    public async Task<bool> UrlExistAsync(string shortenedUrl)
     {
-        return _dbContext.Urls
+        return await _dbContext.Urls
             .Where(url => url.ShortenedUrl == shortenedUrl)
-            .Any();
+            .AnyAsync();
     }
 
-    protected string GetShortenedUrl()
+    protected async Task<string> GetShortenedUrlAsync()
     {
         string shortenedUrl;
         do
         {
             shortenedUrl = Guid.NewGuid().ToString()[..8];
-        } while (UrlExist(shortenedUrl));
+        } while (await UrlExistAsync(shortenedUrl));
 
         return shortenedUrl;
     }

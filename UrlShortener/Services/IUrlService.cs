@@ -4,7 +4,7 @@ namespace UrlShortener.Services;
 
 public interface IUrlService
 {
-    string AddUrl(RequestDto requestDto);
-    ResponseDto GetUrlByShortenedUrl(string shortenedUrl);
-    bool UrlExist(string shortenedUrl);
+    Task<string> AddUrlAsync(RequestDto requestDto);
+    Task<ResponseDto> GetUrlByShortenedUrlAsync(string shortenedUrl);
+    Task<bool> UrlExistAsync(string shortenedUrl);
 }

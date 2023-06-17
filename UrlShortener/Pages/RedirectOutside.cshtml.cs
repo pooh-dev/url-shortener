@@ -12,9 +12,9 @@ namespace UrlShortener.Pages
             _urlService = urlService;
         }
 
-        public IActionResult OnGet(string shortenedUrl)
+        public async Task<IActionResult> OnGet(string shortenedUrl)
         {
-            var responseDto = _urlService.GetUrlByShortenedUrl(shortenedUrl);
+            var responseDto = await _urlService.GetUrlByShortenedUrlAsync(shortenedUrl);
 
             return responseDto is null
                 ? RedirectToPage("Error404")
