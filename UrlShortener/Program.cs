@@ -3,6 +3,7 @@ using UrlShortener.Configurations;
 using UrlShortener.Data;
 using UrlShortener.Data.Models;
 using UrlShortener.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
