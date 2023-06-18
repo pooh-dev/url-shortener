@@ -15,7 +15,7 @@ public class UrlService : IUrlService
         _mapper = mapper;
     }
 
-    public async Task<string> AddUrlAsync(RequestDto requestDto)
+    public async Task<string> AddUrlAsync(RequestUrlDto requestDto)
     {
         var urlData = _mapper.Map<UrlData>(requestDto);
         urlData.ShortenedUrl = await GetShortenedUrlAsync();
@@ -26,13 +26,27 @@ public class UrlService : IUrlService
         return urlData.ShortenedUrl;
     }
 
-    public async Task<ResponseDto> GetUrlByShortenedUrlAsync(string shortenedUrl)
+    public async Task<ResponseUrlDto> GetUrlByShortenedUrlAsync(string shortenedUrl)
     {
         var urlData = await _dbContext.Urls
             .Where(url => url.ShortenedUrl == shortenedUrl)
             .FirstOrDefaultAsync();
 
-        return _mapper.Map<ResponseDto>(urlData);
+        return _mapper.Map<ResponseUrlDto>(urlData);
+    }
+
+    public async Task<IEnumerable<ResponseUrlDto>> GetUrlsByOwnerNameAsync(string ownerName)
+    {
+        if (String.IsNullOrEmpty(ownerName))
+        {
+            return Enumerable.Empty<ResponseUrlDto>();
+        }
+
+        var urlsData = await _dbContext.Urls
+            .Where(url => url.OwnerName == ownerName)
+            .ToListAsync();
+
+        return _mapper.Map<IEnumerable<ResponseUrlDto>>(urlsData);
     }
 
     public async Task<bool> UrlExistAsync(string shortenedUrl)

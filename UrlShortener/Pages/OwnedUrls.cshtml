@@ -1,0 +1,43 @@
+﻿@page "/owned-urls"
+@model UrlShortener.Pages.OwnedUrlsModel
+
+@{
+    ViewData["Title"] = "Your URLs";
+    var firstUrl = Model.Urls.FirstOrDefault();
+}
+
+<h1 class="mb-5">Your Urls</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => firstUrl.ShortenedUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => firstUrl.OriginalUrl)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var url in Model.Urls)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => url.ShortenedUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => url.OriginalUrl)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}

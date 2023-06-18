@@ -14,7 +14,7 @@ public class IndexModel : PageModel
     }
 
     [BindProperty]
-    public RequestDto RequestDto { get; set; }
+    public RequestUrlDto RequestDto { get; set; }
 
     public void OnGet() { }
 
@@ -23,6 +23,11 @@ public class IndexModel : PageModel
         if (!ModelState.IsValid)
         {
             return Page();
+        }
+
+        if (User.Identity.IsAuthenticated)
+        {
+            RequestDto.OwnerName = User.Identity.Name;
         }
 
         var shortenedUrl = await _urlService.AddUrlAsync(RequestDto);
