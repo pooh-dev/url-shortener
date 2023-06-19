@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Your URLs";
     var firstUrl = Model.Urls.FirstOrDefault();
+    var baseUri = $"{Request.Scheme}://{Request.Host}";
 }
 
 <h1 class="mb-5">Your Urls</h1>
@@ -17,17 +18,17 @@
             <th>
                 @Html.DisplayNameFor(model => firstUrl.OriginalUrl)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var url in Model.Urls)
         {
             <tr>
+                <td>@baseUri/@url.ShortenedUrl</td>
+                <td>@url.OriginalUrl</td>
                 <td>
-                    @Html.DisplayFor(modelItem => url.ShortenedUrl)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => url.OriginalUrl)
+                    <a href="url-usage-info/@url.ShortenedUrl" class="btn btn-info">Usage Info</a>
                 </td>
             </tr>
         }

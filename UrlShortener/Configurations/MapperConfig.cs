@@ -8,7 +8,8 @@ public class MapperConfig : Profile
     public MapperConfig()
     {
         CreateMap<UrlData, RequestUrlDto>().ReverseMap();
-        CreateMap<UrlData, ResponseUrlDto>().ReverseMap();
+        CreateMap<UrlData, UrlDto>().ReverseMap();
+        CreateMap<UrlUsageData, UrlUsageDto>().ReverseMap();
     }
 
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Primitives;
+using UrlShortener.Data.Models;
 using UrlShortener.Services;
 
 namespace UrlShortener.Pages
@@ -14,11 +16,27 @@ namespace UrlShortener.Pages
 
         public async Task<IActionResult> OnGet(string shortenedUrl)
         {
-            var responseDto = await _urlService.GetUrlByShortenedUrlAsync(shortenedUrl);
+            var url = await _urlService.GetUrlByShortenedUrlAsync(shortenedUrl);
 
-            return responseDto is null
-                ? RedirectToPage("Error404")
-                : Redirect(responseDto.OriginalUrl);
+            if (url is null)
+            {
+                return RedirectToPage("Error404");
+            }
+
+            if (url.OwnerName != User.Identity.Name)
+            {
+                var urlUsageDto = new UrlUsageDto
+                {
+                    Accept = HttpContext.Request.Headers.Accept.ToString(),
+                    Language = HttpContext.Request.Headers.AcceptLanguage.ToString(),
+                    UserAgent = HttpContext.Request.Headers.UserAgent.ToString(),
+                    IpAddress = HttpContext.Connection.RemoteIpAddress.ToString()
+                };
+
+                await _urlService.AddUrlUsageInfoAsync(shortenedUrl, urlUsageDto);
+            }
+
+            return Redirect(url.OriginalUrl);
         }
     }
 }

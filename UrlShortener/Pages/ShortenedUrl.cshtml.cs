@@ -12,7 +12,7 @@ public class ShortenedUrlModel : PageModel
         _urlService = urlService;
     }
 
-    public ResponseUrlDto ResponseDto { get; set; }
+    public UrlDto ResponseDto { get; set; }
 
     public async Task OnGet(string url)
     {

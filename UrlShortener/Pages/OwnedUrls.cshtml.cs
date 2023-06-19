@@ -14,14 +14,10 @@ public class OwnedUrlsModel : PageModel
         _urlService = urlService;
     }
 
-    public IEnumerable<ResponseUrlDto> Urls { get; set; }
+    public IEnumerable<UrlDto> Urls { get; set; }
 
     public async Task OnGetAsync()
     {
         Urls = await _urlService.GetUrlsByOwnerNameAsync(User.Identity.Name);
-        foreach (var url in Urls)
-        {
-            url.ShortenedUrl = $"{Request.Scheme}://{Request.Host}/{url.ShortenedUrl}";
-        }
     }
 }

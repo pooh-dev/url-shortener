@@ -1,0 +1,63 @@
+﻿@page "/url-usage-info/{shortenedUrl}"
+@model UrlShortener.Pages.UrlUsageInfoModel
+
+@{
+    ViewData["Title"] = "URL Usage Info";
+    var firstUrlUsageInfo = Model.Url.UsageInfo.FirstOrDefault();
+}
+
+<h1 class="mb-3">URL Usage Info</h1>
+<h6>Shortened URL: 
+    <a href="@Model.Url.ShortenedUrl">@Model.Url.ShortenedUrl</a>
+</h6>
+<h6 class="mb-5">Distanation URL: 
+    <a href="@Model.Url.OriginalUrl">@Model.Url.OriginalUrl</a>
+</h6>
+
+<div class="table-responsive text-nowrap">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => firstUrlUsageInfo.Accept)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstUrlUsageInfo.Language)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstUrlUsageInfo.UserAgent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => firstUrlUsageInfo.IpAddress)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var urlUsageInfo in Model.Url.UsageInfo)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => urlUsageInfo.Accept)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => urlUsageInfo.Language)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => urlUsageInfo.UserAgent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => urlUsageInfo.IpAddress)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}
