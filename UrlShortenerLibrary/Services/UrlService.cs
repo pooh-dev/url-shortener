@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using UrlShortener.Data;
-using UrlShortener.Data.Models;
+using UrlShortenerLibrary.Data;
+using UrlShortenerLibrary.Data.Models;
 
-namespace UrlShortener.Services;
+namespace UrlShortenerLibrary.Services;
 
 public class UrlService : IUrlService
 {

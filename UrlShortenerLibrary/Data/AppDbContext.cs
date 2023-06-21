@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using UrlShortener.Data.Models;
+using UrlShortenerLibrary.Data.Models;
 
-namespace UrlShortener.Data;
+namespace UrlShortenerLibrary.Data;
 
 public class AppDbContext : IdentityDbContext<AppUser>
 {

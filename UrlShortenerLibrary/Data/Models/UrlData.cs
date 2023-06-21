@@ -1,4 +1,4 @@
-﻿namespace UrlShortener.Data.Models;
+﻿namespace UrlShortenerLibrary.Data.Models;
 
 public class UrlData
 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using UrlShortener.Data.Models;
+using UrlShortenerLibrary.Data.Models;
 
-namespace UrlShortener.Configurations;
+namespace UrlShortenerLibrary.Configurations;
 
 public class MapperConfig : Profile
 {

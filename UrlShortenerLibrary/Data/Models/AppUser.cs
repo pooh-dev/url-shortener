@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace UrlShortener.Data.Models;
+namespace UrlShortenerLibrary.Data.Models;
 
 public class AppUser : IdentityUser
 {

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace UrlShortener.Data.Models;
+namespace UrlShortenerLibrary.Data.Models;
 
 public class UrlUsageDto
 {

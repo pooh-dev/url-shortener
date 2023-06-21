@@ -1,6 +1,6 @@
-﻿using UrlShortener.Data.Models;
+﻿using UrlShortenerLibrary.Data.Models;
 
-namespace UrlShortener.Services;
+namespace UrlShortenerLibrary.Services;
 
 public interface IUrlService
 {

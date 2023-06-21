@@ -1,4 +1,7 @@
-﻿namespace UrlShortener.Services;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace UrlShortenerLibrary.Services;
 
 public class UrlUsageInfoHostedService : BackgroundService
 {

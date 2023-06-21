@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using UrlShortener.Data.Models;
+using UrlShortenerLibrary.Data.Models;
 
 namespace UrlShortener.Areas.Identity.Pages.Account
 {
