@@ -3,7 +3,6 @@ using UrlShortener.Configurations;
 using UrlShortener.Data;
 using UrlShortener.Data.Models;
 using UrlShortener.Services;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +16,9 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
     .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddScoped<IUrlService, UrlService>();
+builder.Services.AddScoped<UrlUsageInfoHandler>();
 builder.Services.AddAutoMapper(typeof(MapperConfig));
-
+builder.Services.AddHostedService<UrlUsageInfoHostedService>();
 
 
 var app = builder.Build();

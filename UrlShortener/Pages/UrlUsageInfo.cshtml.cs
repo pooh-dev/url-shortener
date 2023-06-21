@@ -18,7 +18,7 @@ public class UrlUsageInfoModel : PageModel
 
     public async Task OnGet(string shortenedUrl)
     {
-        Url = await _urlService.GetUrlByShortenedUrlAsync(shortenedUrl);
+        Url = await _urlService.GetUrlByShortenedUrlAsync(shortenedUrl, includeUsageInfo: true);
         Url.ShortenedUrl = $"{Request.Scheme}://{Request.Host}/{Url.ShortenedUrl}";
     }
 }

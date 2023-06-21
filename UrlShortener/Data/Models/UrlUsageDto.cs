@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 namespace UrlShortener.Data.Models;
 
 public class UrlUsageDto
 {
+    public int UrlDataId { get; set; }
+
     [Display(Name = "Accept")]
     public string Accept { get; set; }
 

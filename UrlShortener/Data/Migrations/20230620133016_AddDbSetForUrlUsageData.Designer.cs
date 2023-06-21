@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UrlShortener.Data;
 
@@ -11,9 +12,10 @@ using UrlShortener.Data;
 namespace UrlShortener.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230620133016_AddDbSetForUrlUsageData")]
+    partial class AddDbSetForUrlUsageData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,7 +247,7 @@ namespace UrlShortener.Data.Migrations
 
                     b.HasKey("UrlDataId");
 
-                    b.ToTable("UrlDatas");
+                    b.ToTable("Urls");
                 });
 
             modelBuilder.Entity("UrlShortener.Data.Models.UrlUsageData", b =>
@@ -279,7 +281,7 @@ namespace UrlShortener.Data.Migrations
 
                     b.HasIndex("UrlDataId");
 
-                    b.ToTable("UrlUsageDatas");
+                    b.ToTable("UrlUsage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

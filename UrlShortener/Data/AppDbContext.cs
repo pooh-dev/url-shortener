@@ -8,5 +8,6 @@ public class AppDbContext : IdentityDbContext<AppUser>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-    public DbSet<UrlData> Urls { get; set; }
+    public DbSet<UrlData> UrlDatas { get; set; }
+    public DbSet<UrlUsageData> UrlUsageDatas { get; set; }
 }

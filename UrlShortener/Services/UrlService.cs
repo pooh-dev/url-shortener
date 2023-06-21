@@ -19,27 +19,25 @@ public class UrlService : IUrlService
     {
         var urlData = _mapper.Map<UrlData>(requestDto);
         urlData.ShortenedUrl = await GetShortenedUrlAsync();
-        urlData.UsageInfo = new List<UrlUsageData>();
 
-        await _dbContext.Urls.AddAsync(urlData);
+        await _dbContext.UrlDatas.AddAsync(urlData);
         await _dbContext.SaveChangesAsync();      
 
         return urlData.ShortenedUrl;
     }
 
-    public async Task AddUrlUsageInfoAsync(string shortenedUrl, UrlUsageDto urlUsageDto)
+    public async Task<UrlDto> GetUrlByShortenedUrlAsync(string shortenedUrl, bool includeUsageInfo)
     {
-        var urlData = await GetByShortenedUrlAsync(shortenedUrl);
-        var urlUsageData = _mapper.Map<UrlUsageData>(urlUsageDto);
-        urlUsageData.UrlDataId = urlData.UrlDataId;
-        urlData.UsageInfo ??= new List<UrlUsageData>();
-        urlData.UsageInfo.Add(urlUsageData);
-        await _dbContext.SaveChangesAsync();
-    }
+        var urlDataQuery = _dbContext.UrlDatas
+            .Where(url => url.ShortenedUrl == shortenedUrl);
 
-    public async Task<UrlDto> GetUrlByShortenedUrlAsync(string shortenedUrl)
-    {
-        var urlData = await GetByShortenedUrlAsync(shortenedUrl);
+        if (includeUsageInfo)
+        {
+            urlDataQuery = urlDataQuery.Include(url => url.UsageInfo);
+        }
+
+        var urlData = await urlDataQuery.FirstOrDefaultAsync();
+
         return _mapper.Map<UrlDto>(urlData);
     }
 
@@ -50,18 +48,11 @@ public class UrlService : IUrlService
             return Enumerable.Empty<UrlDto>();
         }
 
-        var urlsData = await _dbContext.Urls
+        var urlsData = await _dbContext.UrlDatas
             .Where(url => url.OwnerName == ownerName)
             .ToListAsync();
 
         return _mapper.Map<IEnumerable<UrlDto>>(urlsData);
-    }
-
-    public async Task<bool> UrlExistAsync(string shortenedUrl)
-    {
-        return await _dbContext.Urls
-            .Where(url => url.ShortenedUrl == shortenedUrl)
-            .AnyAsync();
     }
 
     protected async Task<string> GetShortenedUrlAsync()
@@ -75,11 +66,10 @@ public class UrlService : IUrlService
         return shortenedUrl;
     }
 
-    private async Task<UrlData> GetByShortenedUrlAsync(string shortenedUrl)
+    protected async Task<bool> UrlExistAsync(string shortenedUrl)
     {
-        return await _dbContext.Urls
+        return await _dbContext.UrlDatas
             .Where(url => url.ShortenedUrl == shortenedUrl)
-            .Include(url => url.UsageInfo)
-            .FirstOrDefaultAsync();
+            .AnyAsync();
     }
 }
